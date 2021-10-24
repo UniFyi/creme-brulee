@@ -31,6 +31,11 @@ type Pagination struct {
 	NumResults int     `json:"numResults"`
 }
 
+type PaginationQP struct {
+	PageNum  *string `form:"pageNum"`
+	PageSize *int    `form:"pageSize"`
+}
+
 func ResolvePageSize(size *int) int {
 	if size == nil {
 		return defaultPageSize
