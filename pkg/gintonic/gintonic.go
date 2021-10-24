@@ -8,13 +8,19 @@ import (
 	"net/http"
 )
 
-type EndpointHandler func(c *gin.Context, ctx context.Context, uri map[string]uuid.UUID)
+type EndpointHandler func(c *gin.Context, ctx context.Context, uri map[string]uuid.UUID, data EndpointData)
+
+type EndpointData struct {
+	Payload     interface{}
+	QueryParams interface{}
+}
 
 type endpointBuilder struct {
 	ctx             context.Context
 	orderedHandlers []gin.HandlerFunc
 	completed       bool
 	uri             map[string]uuid.UUID
+	data            EndpointData
 }
 
 func NewEndpointBuilder(ctx context.Context) *endpointBuilder {
@@ -22,6 +28,7 @@ func NewEndpointBuilder(ctx context.Context) *endpointBuilder {
 		ctx:             ctx,
 		orderedHandlers: make([]gin.HandlerFunc, 0),
 		uri:             make(map[string]uuid.UUID, 0),
+
 	}
 }
 
@@ -89,6 +96,7 @@ func (eb *endpointBuilder) WithQueryParams(queryParams interface{}) *endpointBui
 			eb.completed = true
 			return
 		}
+		eb.data.QueryParams = queryParams
 	})
 	return eb
 }
@@ -107,6 +115,7 @@ func (eb *endpointBuilder) WithPayload(payload interface{}) *endpointBuilder {
 			eb.completed = true
 			return
 		}
+		eb.data.Payload = payload
 	})
 	return eb
 }
@@ -121,6 +130,6 @@ func (eb *endpointBuilder) BuildFrom(endpointHandler EndpointHandler) gin.Handle
 			return
 		}
 
-		endpointHandler(c, eb.ctx, eb.uri)
+		endpointHandler(c, eb.ctx, eb.uri, eb.data)
 	}
 }
