@@ -8,7 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func BumpDatabaseVersion(ctx context.Context, filePath string, cfg config.PsqlConfig) {
+func BumpDatabaseVersion(ctx context.Context, filePath string, cfg *config.PsqlConfig) {
 	log := ctxlogrus.Extract(ctx)
 	// Initiate database migration
 	m, err := migrate.New(filePath, cfg.GetDataSourcePSQL().String())
