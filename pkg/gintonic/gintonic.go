@@ -89,15 +89,16 @@ func (eb *endpointBuilder) WithQueryParams(queryParamsProvider DataProvider) *en
 			return
 		}
 
+		queryParams := queryParamsProvider()
 		log := ctxlogrus.Extract(eb.ctx)
-		err := c.Bind(queryParamsProvider())
+		err := c.Bind(queryParams)
 		if err != nil {
 			log.Debugf("invalid query params")
 			c.JSON(http.StatusBadRequest, nil)
 			eb.completed = true
 			return
 		}
-		eb.data.QueryParams = queryParamsProvider()
+		eb.data.QueryParams = queryParams
 	})
 	return eb
 }
@@ -108,15 +109,16 @@ func (eb *endpointBuilder) WithPayload(payloadProvider DataProvider) *endpointBu
 			return
 		}
 
+		payload := payloadProvider()
 		log := ctxlogrus.Extract(eb.ctx)
-		err := c.BindJSON(payloadProvider())
+		err := c.BindJSON(payload)
 		if err != nil {
 			log.Debugf("invalid payload")
 			c.JSON(http.StatusBadRequest, nil)
 			eb.completed = true
 			return
 		}
-		eb.data.Payload = payloadProvider()
+		eb.data.Payload = payload
 	})
 	return eb
 }
