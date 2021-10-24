@@ -6,6 +6,9 @@ import (
 	"github.com/golang-migrate/migrate"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus/ctxlogrus"
 	"github.com/sirupsen/logrus"
+
+	_ "github.com/golang-migrate/migrate/database/postgres"
+	_ "github.com/golang-migrate/migrate/source/file"
 )
 
 func BumpDatabaseVersion(ctx context.Context, filePath string, cfg *config.PsqlConfig) {

@@ -3,22 +3,17 @@ package messaging
 import (
 	"context"
 	"encoding/base64"
-	"fmt"
+	"github.com/UniFyi/creme-brulee/pkg/pagination"
 	"github.com/google/uuid"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus/ctxlogrus"
 	"strings"
 	"time"
 )
 
-const (
-	PageTimeFormat = "2006-01-02 15:04:05.000000"
-	defaultPageSize = 3
-)
-
-func OptionalStringToPage(ctx context.Context, fieldName string, optional *string) (*PageCursor, error){
+func OptionalStringToPage(ctx context.Context, fieldName string, optional *string) (*pagination.PageCursor, error){
 	log := ctxlogrus.Extract(ctx)
 	if optional != nil {
-		pageCursor := &PageCursor{}
+		pageCursor := &pagination.PageCursor{}
 		invalidFieldErr := InvalidField{
 			Name:   fieldName,
 			Format: "page",
@@ -36,7 +31,7 @@ func OptionalStringToPage(ctx context.Context, fieldName string, optional *strin
 			return nil, invalidFieldErr
 		}
 
-		parsedTime, err := time.Parse(PageTimeFormat, split[0])
+		parsedTime, err := time.Parse(pagination.PageTimeFormat, split[0])
 		if err != nil {
 			log.Debugf("field %v has invalid timestamp format [%v]", fieldName, split[0])
 			return nil, invalidFieldErr
@@ -95,27 +90,4 @@ func OptionalStringToUUIDList(ctx context.Context, fieldName string, text *strin
 		stringList = strings.Split(*text, ",")
 	}
 	return OptionalStringListToUUIDList(ctx, fieldName, stringList)
-}
-
-func ResolvePageSize(size *int) int {
-	if size == nil {
-		return defaultPageSize
-	}
-	if *size < 1 {
-		// Negative page size or zero will result into usage of default page size
-		return defaultPageSize
-	}
-	return *size
-}
-
-func FormatPageCursor(pageCursor *PageCursor) *string {
-	if pageCursor != nil {
-		formattedTime := pageCursor.Time.Format(PageTimeFormat)
-		stringCursor := []byte(
-			fmt.Sprintf("%v|%v", formattedTime, pageCursor.Num.String()),
-		)
-		result := base64.StdEncoding.EncodeToString(stringCursor)
-		return &result
-	}
-	return nil
 }
