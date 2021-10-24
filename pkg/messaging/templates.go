@@ -39,16 +39,3 @@ func newEvent(data []byte, eventType interface{}, body string, template interfac
 	}
 	return template, nil
 }
-
-// EXAMPLE
-//func NewUser(ctx context.Context, data []byte) (interface{}, error) {
-//	var user *User
-//	return NewEventFromTemplate(ctx, data, map[string]EventTemplate{
-//		UserCreatedEventKey: {
-//			Template: user,
-//		},
-//		UserUpdatedEventKey: {
-//			Template: user,
-//		},
-//	})
-//}

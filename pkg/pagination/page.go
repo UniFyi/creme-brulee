@@ -31,7 +31,7 @@ type Pagination struct {
 	NumResults int     `json:"numResults"`
 }
 
-type PaginationQP struct {
+type QP struct {
 	PageNum  *string `form:"pageNum"`
 	PageSize *int    `form:"pageSize"`
 }
