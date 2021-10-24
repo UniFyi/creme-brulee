@@ -54,7 +54,7 @@ func FormatPageCursor(pageCursor *PageCursor) *string {
 	return nil
 }
 
-func fromPageSummary(pageSummary *Summary) *Pagination {
+func FromPageSummary(pageSummary *Summary) *Pagination {
 	return &Pagination{
 		Current:    FormatPageCursor(pageSummary.Current),
 		Next:       FormatPageCursor(pageSummary.Next),
