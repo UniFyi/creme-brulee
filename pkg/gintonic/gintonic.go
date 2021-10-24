@@ -9,6 +9,7 @@ import (
 )
 
 type EndpointHandler func(c *gin.Context, ctx context.Context, uri map[string]uuid.UUID, data EndpointData)
+type DataProvider func() interface{}
 
 type EndpointData struct {
 	Payload     interface{}
@@ -82,40 +83,40 @@ func (eb *endpointBuilder) WithURI(uriIdentifiers ...string) *endpointBuilder {
 	return eb
 }
 
-func (eb *endpointBuilder) WithQueryParams(queryParams interface{}) *endpointBuilder {
+func (eb *endpointBuilder) WithQueryParams(queryParamsProvider DataProvider) *endpointBuilder {
 	eb.orderedHandlers = append(eb.orderedHandlers, func(c *gin.Context) {
 		if eb.completed {
 			return
 		}
 
 		log := ctxlogrus.Extract(eb.ctx)
-		err := c.Bind(queryParams)
+		err := c.Bind(queryParamsProvider())
 		if err != nil {
 			log.Debugf("invalid query params")
 			c.JSON(http.StatusBadRequest, nil)
 			eb.completed = true
 			return
 		}
-		eb.data.QueryParams = queryParams
+		eb.data.QueryParams = queryParamsProvider()
 	})
 	return eb
 }
 
-func (eb *endpointBuilder) WithPayload(payload interface{}) *endpointBuilder {
+func (eb *endpointBuilder) WithPayload(payloadProvider DataProvider) *endpointBuilder {
 	eb.orderedHandlers = append(eb.orderedHandlers, func(c *gin.Context) {
 		if eb.completed {
 			return
 		}
 
 		log := ctxlogrus.Extract(eb.ctx)
-		err := c.BindJSON(payload)
+		err := c.BindJSON(payloadProvider())
 		if err != nil {
 			log.Debugf("invalid payload")
 			c.JSON(http.StatusBadRequest, nil)
 			eb.completed = true
 			return
 		}
-		eb.data.Payload = payload
+		eb.data.Payload = payloadProvider()
 	})
 	return eb
 }
