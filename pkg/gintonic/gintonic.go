@@ -21,6 +21,7 @@ func NewEndpointBuilder(ctx context.Context) *endpointBuilder {
 	return &endpointBuilder{
 		ctx:             ctx,
 		orderedHandlers: make([]gin.HandlerFunc, 0),
+		uri:             make(map[string]uuid.UUID, 0),
 	}
 }
 
