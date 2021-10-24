@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-type EndpointHandler func(c *gin.Context, ctx context.Context, uri map[string]uuid.UUID) gin.HandlerFunc
+type EndpointHandler func(c *gin.Context, ctx context.Context, uri map[string]uuid.UUID)
 
 type endpointBuilder struct {
 	ctx             context.Context
