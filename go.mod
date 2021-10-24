@@ -1,4 +1,4 @@
-module github.com/unifyi/creme-brulee
+module github.com/UniFyi/creme-brulee
 
 go 1.13
 

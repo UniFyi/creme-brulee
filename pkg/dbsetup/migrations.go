@@ -2,10 +2,10 @@ package dbsetup
 
 import (
 	"context"
+	"github.com/UniFyi/creme-brulee/pkg/config"
 	"github.com/golang-migrate/migrate"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus/ctxlogrus"
 	"github.com/sirupsen/logrus"
-	"github.com/unifyi/creme-brulee/pkg/config"
 )
 
 func BumpDatabaseVersion(ctx context.Context, filePath string, cfg config.PsqlConfig) {

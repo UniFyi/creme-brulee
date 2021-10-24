@@ -3,9 +3,9 @@ package devsetup
 import (
 	"context"
 	"fmt"
+	"github.com/UniFyi/creme-brulee/pkg/config"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus/ctxlogrus"
-	"github.com/unifyi/creme-brulee/pkg/config"
 )
 
 func CreateKafkaTopics(ctx context.Context, baseConf *config.BaseConfig, cfg *config.KafkaConfig, topicNames []string) {

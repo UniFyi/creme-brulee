@@ -2,9 +2,9 @@ package logging
 
 import (
 	"context"
+	"github.com/UniFyi/creme-brulee/pkg/config"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus/ctxlogrus"
 	"github.com/sirupsen/logrus"
-	"github.com/unifyi/creme-brulee/pkg/config"
 )
 
 func EnhanceContextWithLogger(ctx context.Context, cfg *config.BaseConfig) context.Context {

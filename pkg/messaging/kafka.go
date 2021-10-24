@@ -2,9 +2,9 @@ package messaging
 
 import (
 	"context"
+	"github.com/UniFyi/creme-brulee/pkg/config"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus/ctxlogrus"
-	"github.com/unifyi/creme-brulee/pkg/config"
 	"gorm.io/gorm"
 )
 
