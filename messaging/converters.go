@@ -3,9 +3,9 @@ package messaging
 import (
 	"context"
 	"encoding/base64"
-	"github.com/UniFyi/creme-brulee/pkg/pagination"
 	"github.com/google/uuid"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus/ctxlogrus"
+	"github.com/unifyi/creme-brulee/pagination"
 	"strings"
 	"time"
 )

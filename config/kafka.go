@@ -5,10 +5,10 @@ import (
 )
 
 type KafkaConfig struct {
-	KafkaHost     string
-	KafkaUsername string
-	KafkaPassword string
-	KafkaSslMode  string
+	Host     string
+	Username string
+	Password string
+	SslMode  string
 }
 
 func NewKafkaConfig() (*KafkaConfig, error) {
@@ -36,29 +36,29 @@ func NewKafkaConfig() (*KafkaConfig, error) {
 	}
 
 	return &KafkaConfig{
-		KafkaHost:     envKafkaHost,
-		KafkaUsername: envKafkaUsername,
-		KafkaPassword: envKafkaPassword,
-		KafkaSslMode:  envKafkaSslMode,
+		Host:     envKafkaHost,
+		Username: envKafkaUsername,
+		Password: envKafkaPassword,
+		SslMode:  envKafkaSslMode,
 	}, nil
 }
 
 func (cfg *KafkaConfig) GetKafkaConfigMap(consumerGroup string) *kafka.ConfigMap {
-	if cfg.KafkaSslMode != "disable" {
+	if cfg.SslMode != "disable" {
 		return &kafka.ConfigMap{
-			"bootstrap.servers":  cfg.KafkaHost,
+			"bootstrap.servers":  cfg.Host,
 			"group.id":           consumerGroup,
 			"enable.auto.commit": false,
 			"security.protocol":  "SASL_SSL",
 			"sasl.mechanisms":    "PLAIN",
-			"sasl.username":      cfg.KafkaUsername,
-			"sasl.password":      cfg.KafkaPassword,
+			"sasl.username":      cfg.Username,
+			"sasl.password":      cfg.Password,
 		}
 	}
 
 	return &kafka.ConfigMap{
-		"bootstrap.servers":  cfg.KafkaHost,
-		"group.id":           "spicy-mango-group",
+		"bootstrap.servers":  cfg.Host,
+		"group.id":           consumerGroup,
 		"enable.auto.commit": false,
 	}
 }

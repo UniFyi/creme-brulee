@@ -2,7 +2,8 @@ package logging
 
 import (
 	"context"
-	"github.com/UniFyi/creme-brulee/pkg/config"
+	"github.com/unifyi/creme-brulee/config"
+
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus/ctxlogrus"
 	"github.com/sirupsen/logrus"
 )
@@ -11,13 +12,6 @@ func EnhanceContextWithLogger(ctx context.Context, cfg *config.BaseConfig) conte
 	logger := logrus.StandardLogger()
 	logger.SetFormatter(&logrus.JSONFormatter{})
 	logger.SetReportCaller(true)
-
-	if level, err := logrus.ParseLevel(cfg.LogLevel); err != nil {
-		logger.Errorf("invalid log level %v", cfg.LogLevel)
-		logger.SetLevel(logrus.InfoLevel)
-	} else {
-		logger.SetLevel(level)
-	}
-
+	logger.SetLevel(cfg.LogLevel)
 	return ctxlogrus.ToContext(ctx, logrus.NewEntry(logger))
 }

@@ -1,10 +1,10 @@
-package messaging
+package kmanager
 
 import (
 	"context"
-	"github.com/UniFyi/creme-brulee/pkg/config"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus/ctxlogrus"
+	"github.com/unifyi/creme-brulee/config"
 	"gorm.io/gorm"
 )
 
@@ -47,6 +47,8 @@ func (mc *MessageConsumer) Start(ctx context.Context, handleMessage TopicHandler
 			if len(msg.Key) != 0 { // ignore heartbeat messages
 				if err = handleMessage(ctx, mc.db, msg); err != nil {
 					log.Error("message will be NOT committed")
+					// TODO if we couldn't consume event from kafka we need to retry
+					// TODO do we fail the pod since it couldn't consume event?
 					continue
 				}
 			}

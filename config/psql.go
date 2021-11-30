@@ -6,13 +6,13 @@ import (
 )
 
 type PsqlConfig struct {
-	PostgresHost         string
-	PostgresPort         string
-	PostgresUser         string
-	PostgresPassword     string
-	PostgresDatabaseName string
-	PostgresSslMode      string
-	PostgresSslRootCert  string
+	Host         string
+	Port         string
+	User         string
+	Password     string
+	DatabaseName string
+	SslMode      string
+	SslRootCert  string
 }
 
 func NewPsqlConfig() (*PsqlConfig, error) {
@@ -50,27 +50,27 @@ func NewPsqlConfig() (*PsqlConfig, error) {
 	}
 
 	return &PsqlConfig{
-		PostgresHost:         envPostgresHost,
-		PostgresPort:         envPostgresPort,
-		PostgresUser:         envPostgresUser,
-		PostgresPassword:     envPostgresPassword,
-		PostgresDatabaseName: envPostgresDatabaseName,
-		PostgresSslMode:      envPostgresSslMode,
-		PostgresSslRootCert:  envPostgresSslRootCertificate,
+		Host:         envPostgresHost,
+		Port:         envPostgresPort,
+		User:         envPostgresUser,
+		Password:     envPostgresPassword,
+		DatabaseName: envPostgresDatabaseName,
+		SslMode:      envPostgresSslMode,
+		SslRootCert:  envPostgresSslRootCertificate,
 	}, nil
 }
 
 func (c *PsqlConfig) GetDataSourcePSQL() *url.URL {
 	postgresURL := &url.URL{
 		Scheme:   "postgres",
-		User:     url.UserPassword(c.PostgresUser, c.PostgresPassword),
-		Host:     fmt.Sprintf("%v:%v", c.PostgresHost, c.PostgresPort),
-		Path:     fmt.Sprintf("/%v", c.PostgresDatabaseName),
+		User:     url.UserPassword(c.User, c.Password),
+		Host:     fmt.Sprintf("%v:%v", c.Host, c.Port),
+		Path:     fmt.Sprintf("/%v", c.DatabaseName),
 		RawQuery: "sslmode=disable",
 	}
 
-	if c.PostgresSslMode != "disable" {
-		postgresURL.RawQuery = fmt.Sprintf("sslmode=%v&sslrootcert=%v", c.PostgresSslMode, c.PostgresSslRootCert)
+	if c.SslMode != "disable" {
+		postgresURL.RawQuery = fmt.Sprintf("sslmode=%v&sslrootcert=%v", c.SslMode, c.SslRootCert)
 	}
 
 	return postgresURL

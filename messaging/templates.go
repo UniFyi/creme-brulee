@@ -11,7 +11,20 @@ type EventTemplate struct {
 	Template interface{}
 }
 
+type EventsTemplate struct {
+	Template interface{}
+	Flatten func(interface{}) []interface{}
+}
+
 func NewEventFromTemplate(ctx context.Context, data []byte, eventTemplates map[string]EventTemplate) (interface{}, error) {
+	events, err := NewEventsFromTemplate(ctx, data, templateToTemplates(eventTemplates))
+	if err != nil {
+		return nil, err
+	}
+	return events[0], nil
+}
+
+func NewEventsFromTemplate(ctx context.Context, data []byte, eventTemplates map[string]EventsTemplate) ([]interface{}, error) {
 	log := ctxlogrus.Extract(ctx)
 
 	var objMap map[string]interface{}
@@ -27,9 +40,26 @@ func NewEventFromTemplate(ctx context.Context, data []byte, eventTemplates map[s
 		if !ok {
 			return nil, fmt.Errorf("unknown event type %v", eventType)
 		}
-		return newEvent(data, eventType, body, event.Template)
+		concreteEvent, err := newEvent(data, eventType, body, event.Template)
+		if err != nil {
+			return nil, err
+		}
+		return event.Flatten(concreteEvent), nil
 	}
 	return nil, fmt.Errorf("missing key [type] in %v", body)
+}
+
+func templateToTemplates(eventTemplates map[string]EventTemplate) map[string]EventsTemplate {
+	list := make(map[string]EventsTemplate, len(eventTemplates))
+	for k, v := range eventTemplates {
+		list[k] = EventsTemplate{
+			Template: v.Template,
+			Flatten: func(data interface{}) []interface{} {
+				return []interface{}{data}
+			},
+		}
+	}
+	return list
 }
 
 func newEvent(data []byte, eventType interface{}, body string, template interface{}) (interface{}, error) {

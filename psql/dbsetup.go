@@ -1,10 +1,10 @@
-package dbsetup
+package psql
 
 import (
 	"context"
-	"github.com/UniFyi/creme-brulee/pkg/config"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus/ctxlogrus"
 	"github.com/sirupsen/logrus"
+	"github.com/unifyi/creme-brulee/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -18,7 +18,7 @@ func NewGORM(ctx context.Context, baseConf *config.BaseConfig, psqlConf *config.
 	if err != nil {
 		log.Fatal(err)
 	}
-	if baseConf.LogLevel == logrus.DebugLevel.String() {
+	if baseConf.LogLevel.String() == logrus.DebugLevel.String() {
 		db = db.Debug()
 	}
 

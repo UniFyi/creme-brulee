@@ -5,6 +5,10 @@ import (
 	"fmt"
 )
 
+type JSONConvertable interface {
+	ToJSON() (string, error)
+}
+
 func ConvertToJson(data interface{}) (string, error) {
 	result, err := json.Marshal(data)
 	if err != nil {

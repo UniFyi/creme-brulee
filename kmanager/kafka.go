@@ -1,14 +1,14 @@
-package devsetup
+package kmanager
 
 import (
 	"context"
 	"fmt"
-	"github.com/UniFyi/creme-brulee/pkg/config"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus/ctxlogrus"
+	"github.com/unifyi/creme-brulee/config"
 )
 
-func CreateKafkaTopics(ctx context.Context, baseConf *config.BaseConfig, cfg *config.KafkaConfig, topicNames []string) {
+func CreateTopics(ctx context.Context, baseConf *config.BaseConfig, cfg *config.KafkaConfig, topicNames []string) {
 	log := ctxlogrus.Extract(ctx)
 
 	if baseConf.Env != "testing" {
@@ -16,7 +16,7 @@ func CreateKafkaTopics(ctx context.Context, baseConf *config.BaseConfig, cfg *co
 	}
 
 	ka, err := kafka.NewAdminClient(&kafka.ConfigMap{
-		"bootstrap.servers": cfg.KafkaHost,
+		"bootstrap.servers": cfg.Host,
 	})
 	if err != nil {
 		log.Fatal(fmt.Errorf("failed to init kafka admin client %v", err))

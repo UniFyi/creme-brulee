@@ -1,11 +1,11 @@
-package dbsetup
+package psql
 
 import (
 	"context"
-	"github.com/UniFyi/creme-brulee/pkg/config"
 	"github.com/golang-migrate/migrate"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus/ctxlogrus"
 	"github.com/sirupsen/logrus"
+	"github.com/unifyi/creme-brulee/config"
 
 	_ "github.com/golang-migrate/migrate/database/postgres"
 	_ "github.com/golang-migrate/migrate/source/file"
