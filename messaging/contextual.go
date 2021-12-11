@@ -3,6 +3,7 @@ package messaging
 import "github.com/google/uuid"
 
 type Baggage struct {
-	UserID uuid.UUID  `json:"userId"`
-	SentAt CustomTime `json:"sentAt"`
+	UserID     uuid.UUID  `json:"userId"`
+	SentAt     CustomTime `json:"sentAt"`
+	ReceiverID uuid.UUID  `json:"receiverId"`
 }

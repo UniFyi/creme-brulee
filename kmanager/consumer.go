@@ -8,10 +8,19 @@ import (
 	"gorm.io/gorm"
 )
 
+const (
+	HealthTopic          = "Healthz"
+	HealthzConsumerGroup = "healthz-consumer-group"
+)
+
 type MessageConsumer struct {
 	consumer   *kafka.Consumer
 	topicNames []string
 	db         *gorm.DB
+}
+
+type KafkaHealthChecker struct {
+	*MessageConsumer
 }
 
 func NewMessageConsumer(ctx context.Context, db *gorm.DB, cfg *config.KafkaConfig, consumerGroup string, topicNames []string) *MessageConsumer {
@@ -60,4 +69,31 @@ func (mc *MessageConsumer) Start(ctx context.Context, handleMessage TopicHandler
 			log.Warnf("consumer kafka error: %v (%v)\n", err, msg)
 		}
 	}
+}
+
+func NewHealthzChecker(ctx context.Context, db *gorm.DB, cfg *config.KafkaConfig) (*KafkaHealthChecker, error) {
+	log := ctxlogrus.Extract(ctx)
+	log.Info("starting healthz kafka consumer")
+	mc := NewMessageConsumer(ctx, db, cfg, HealthzConsumerGroup, []string{HealthTopic})
+
+	err := mc.consumer.SubscribeTopics(mc.topicNames, nil)
+	if err != nil {
+		log.Errorf("failed to subscirbe to kafka topics %v", err)
+		return nil, err
+	}
+	defer mc.consumer.Close()
+
+	return &KafkaHealthChecker{
+		MessageConsumer: mc,
+	}, nil
+}
+
+func (h *KafkaHealthChecker) Cleanup() error {
+	return h.consumer.Close()
+}
+
+func (h *KafkaHealthChecker) IsHealthy() bool {
+	_, err := h.consumer.ReadMessage(-1)
+	// is healthy only if error is null
+	return err == nil
 }

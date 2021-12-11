@@ -22,6 +22,9 @@ func CreateTopics(ctx context.Context, baseConf *config.BaseConfig, cfg *config.
 		log.Fatal(fmt.Errorf("failed to init kafka admin client %v", err))
 	}
 
+	// always include `health` topic for testing
+	topicNames = append(topicNames, HealthTopic)
+
 	topics := make([]kafka.TopicSpecification, len(topicNames))
 	for i, name := range topicNames {
 		topics[i] = kafka.TopicSpecification{
