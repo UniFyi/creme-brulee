@@ -20,7 +20,7 @@ type MessageConsumer struct {
 }
 
 type KafkaHealthChecker struct {
-	*MessageConsumer
+	consumer *kafka.Consumer
 }
 
 func NewMessageConsumer(ctx context.Context, db *gorm.DB, cfg *config.KafkaConfig, consumerGroup string, topicNames []string) *MessageConsumer {
@@ -71,20 +71,22 @@ func (mc *MessageConsumer) Start(ctx context.Context, handleMessage TopicHandler
 	}
 }
 
-func NewHealthzChecker(ctx context.Context, db *gorm.DB, cfg *config.KafkaConfig) (*KafkaHealthChecker, error) {
+func newHealthzChecker(ctx context.Context, cfg *config.KafkaConfig) (*KafkaHealthChecker, error) {
 	log := ctxlogrus.Extract(ctx)
 	log.Info("starting healthz kafka consumer")
-	mc := NewMessageConsumer(ctx, db, cfg, HealthzConsumerGroup, []string{HealthTopic})
 
-	err := mc.consumer.SubscribeTopics(mc.topicNames, nil)
+	kc, kafkaError := kafka.NewConsumer(cfg.GetKafkaConfigMap(HealthzConsumerGroup))
+	if kafkaError != nil {
+		log.Fatal(kafkaError)
+	}
+	err := kc.SubscribeTopics([]string{HealthTopic}, nil)
 	if err != nil {
 		log.Errorf("failed to subscirbe to kafka topics %v", err)
 		return nil, err
 	}
-	defer mc.consumer.Close()
 
 	return &KafkaHealthChecker{
-		MessageConsumer: mc,
+		consumer: kc,
 	}, nil
 }
 
