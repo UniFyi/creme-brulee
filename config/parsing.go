@@ -62,6 +62,22 @@ func GetEnvInt64(envName string) (int64, error) {
 	return result, nil
 }
 
+func GetEnvInt(envName string) (int, error) {
+	val, err := GetEnvInt64(envName)
+	if err != nil {
+		return 0, err
+	}
+	return int(val), nil
+}
+
+func GetEnvIntWithDefault(envName string, defaultValue int64) (int, error) {
+	val, err := GetEnvInt64WithDefault(envName, defaultValue)
+	if err != nil {
+		return 0, err
+	}
+	return int(val), nil
+}
+
 func GetEnvBoolWithDefault(envName string, defaultValue bool) (bool, error) {
 	val, err := GetEnvBool(envName)
 	switch err.(type) {
