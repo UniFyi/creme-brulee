@@ -14,7 +14,7 @@ func GetEnvDuration(envName string) (time.Duration, error) {
 		return 0, err
 	}
 
-	const timeFormat = `^([0-9]+)([sSmMhHdD]))$`
+	const timeFormat = `^([0-9]+)([sSmMhHdD])$`
 	timeRegex := regexp.MustCompile(timeFormat)
 	submatch := timeRegex.FindAllStringSubmatch(val, -1)
 	if len(submatch) != 1 || len(submatch[0]) != 3 {
