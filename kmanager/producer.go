@@ -9,6 +9,7 @@ import (
 )
 
 type OutboxORM struct {
+	ID         uint   `gorm:"primarykey"`
 	KafkaTopic string `gorm:"type:text"`
 	KafkaKey   string `gorm:"type:text"`
 	KafkaValue string `gorm:"type:text"`
@@ -48,7 +49,6 @@ func SendEvents(ctx context.Context, tx *gorm.DB, topic string, events []messagi
 	defer span.End()
 	log := ctxlogrus.Extract(ctx)
 
-
 	outboxORMs := make([]OutboxORM, len(events))
 	for i, e := range events {
 		jsonData, err := e.ToJSON()
@@ -56,9 +56,9 @@ func SendEvents(ctx context.Context, tx *gorm.DB, topic string, events []messagi
 			return err
 		}
 		outboxORMs[i] = OutboxORM{
-			KafkaTopic:        topic,
-			KafkaKey:          "some-kafka-key",
-			KafkaValue:        jsonData,
+			KafkaTopic: topic,
+			KafkaKey:   "some-kafka-key",
+			KafkaValue: jsonData,
 		}
 	}
 
