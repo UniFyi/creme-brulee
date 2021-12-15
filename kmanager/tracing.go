@@ -64,8 +64,12 @@ func (t *Trace) toSpanContext() (*trace.SpanContext, error) {
 	return &spanCtx, nil
 }
 
+// TraceFromEvent deprecated
 func TraceFromEvent(ctx context.Context, event []byte) (context.Context, trace.Span) {
-	name := "EventReceived"
+	return TraceFromEventNamed(ctx, event, "EventReceived")
+}
+
+func TraceFromEventNamed(ctx context.Context, event []byte, name string) (context.Context, trace.Span) {
 	spanCtx, err := traceFromEventInternal(event)
 	if err != nil {
 		log := ctxlogrus.Extract(ctx)
