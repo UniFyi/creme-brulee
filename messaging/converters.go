@@ -92,9 +92,17 @@ func OptionalStringToUUIDList(ctx context.Context, fieldName string, text *strin
 	return OptionalStringListToUUIDList(ctx, fieldName, stringList)
 }
 
-func OptionalStringToTime(ctx context.Context, text *string) (*time.Time, error) {
+func OptionalStringToTime(ctx context.Context, fieldName string, text *string) (*time.Time, error) {
 	if text != nil {
-		return ParseTime(*text)
+		parseTime, err := ParseTime(*text)
+		if err != nil {
+			invalidFieldErr := InvalidField{
+				Name:   fieldName,
+				Format: timeFormat,
+			}
+			return nil, invalidFieldErr
+		}
+		return parseTime, nil
 	}
 	return nil, nil
 }
