@@ -91,3 +91,10 @@ func OptionalStringToUUIDList(ctx context.Context, fieldName string, text *strin
 	}
 	return OptionalStringListToUUIDList(ctx, fieldName, stringList)
 }
+
+func OptionalStringToTime(ctx context.Context, text *string) (*time.Time, error) {
+	if text != nil {
+		return ParseTime(*text)
+	}
+	return nil, nil
+}

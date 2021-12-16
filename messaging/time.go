@@ -14,13 +14,12 @@ func NewTime(t time.Time) CustomTime {
 	return CustomTime{Time: t}
 }
 
-func ParseTime(s string) (*CustomTime, error) {
+func ParseTime(s string) (*time.Time, error) {
 	parse, err := time.Parse(timeFormat, s)
 	if err != nil {
 		return nil, err
 	}
-	customTime := NewTime(parse)
-	return &customTime, nil
+	return &parse, nil
 }
 
 type CustomTime struct {
