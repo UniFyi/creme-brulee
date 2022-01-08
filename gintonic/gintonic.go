@@ -7,6 +7,12 @@ import (
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus/ctxlogrus"
 	"github.com/unifyi/creme-brulee/messaging"
 	"net/http"
+	"strconv"
+)
+
+const (
+	HeaderUserID = "UniFyi-User-Id"
+	HeaderRole   = "UniFyi-Role"
 )
 
 type EndpointHandler func(c *gin.Context, ctx context.Context, uri map[string]uuid.UUID, data EndpointData)
@@ -40,9 +46,37 @@ func NewEndpointBuilder(ctx context.Context) *endpointBuilder {
 func (eb *endpointBuilder) UserScoped() *endpointBuilder {
 	eb.orderedHandlers = append(eb.orderedHandlers, func(c *gin.Context, incoming *PipedData) *PipedData {
 		log := ctxlogrus.Extract(incoming.ctx)
-		userID := c.GetHeader("UniFyi-User-Id")
+
+		// Extract user role and select enum
+		userRoleStr := c.GetHeader(HeaderRole)
+		if userRoleStr == "" {
+			log.Warnf("request is missing header '%v'", HeaderRole)
+			userRoleStr = "0" // Aka Basic user
+		}
+		userRole, err := strconv.ParseInt(userRoleStr, 10, 8)
+		if err != nil {
+			log.Errorf("'%v' is not int8", HeaderRole)
+			c.JSON(http.StatusInternalServerError, nil)
+			incoming.completed = true
+			return incoming
+		}
+		userRoleEnum := UserRole(userRole)
+		switch userRoleEnum {
+		case RoleBasicUser:
+			fallthrough
+		case RoleAdmin:
+			break
+		default:
+			log.Errorf("request is missing header '%v'", HeaderRole)
+			c.JSON(http.StatusInternalServerError, nil)
+			incoming.completed = true
+			return incoming
+		}
+
+		// Extract user id and parse as uuid
+		userID := c.GetHeader(HeaderUserID)
 		if userID == "" {
-			log.Errorf("request is missing header 'UniFyi-User-Id'")
+			log.Errorf("request is missing header '%v'", HeaderUserID)
 			c.JSON(http.StatusInternalServerError, nil)
 			incoming.completed = true
 			return incoming
@@ -55,7 +89,9 @@ func (eb *endpointBuilder) UserScoped() *endpointBuilder {
 			return incoming
 		}
 
-		incoming.ctx = context.WithValue(incoming.ctx, "userID", userUUID)
+		// Attach data to context
+		incoming.ctx = context.WithValue(incoming.ctx, CtxKeyUserID, userUUID)
+		incoming.ctx = context.WithValue(incoming.ctx, CtxKeyRole, userRoleEnum)
 		incoming.completed = false
 		return incoming
 	})
