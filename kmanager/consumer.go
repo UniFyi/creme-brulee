@@ -26,7 +26,7 @@ type KafkaHealthChecker struct {
 func NewMessageConsumer(ctx context.Context, db *gorm.DB, cfg *config.KafkaConfig, consumerGroup string, topicNames []string) *MessageConsumer {
 	log := ctxlogrus.Extract(ctx)
 
-	kc, kafkaError := kafka.NewConsumer(cfg.GetKafkaConfigMap(consumerGroup))
+	kc, kafkaError := kafka.NewConsumer(cfg.GetKafkaConfigMapConsumer(consumerGroup))
 	if kafkaError != nil {
 		log.Fatal(kafkaError)
 	}
@@ -75,7 +75,7 @@ func newHealthzChecker(ctx context.Context, cfg *config.KafkaConfig) (*KafkaHeal
 	log := ctxlogrus.Extract(ctx)
 	log.Info("starting healthz kafka consumer")
 
-	kc, kafkaError := kafka.NewConsumer(cfg.GetKafkaConfigMap(HealthzConsumerGroup))
+	kc, kafkaError := kafka.NewConsumer(cfg.GetKafkaConfigMapConsumer(HealthzConsumerGroup))
 	if kafkaError != nil {
 		log.Fatal(kafkaError)
 	}

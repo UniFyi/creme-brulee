@@ -43,12 +43,24 @@ func NewKafkaConfig() (*KafkaConfig, error) {
 	}, nil
 }
 
-func (cfg *KafkaConfig) GetKafkaConfigMap(consumerGroup string) *kafka.ConfigMap {
+func (cfg *KafkaConfig) GetKafkaConfigMapConsumer(consumerGroup string) *kafka.ConfigMap {
+	result := *cfg.getKafkaConfigMapShared()
+	result["group.id"] = consumerGroup
+	result["enable.auto.commit"] = false
+	return &result
+}
+
+
+func (cfg *KafkaConfig) GetKafkaConfigMapProducer(clientID string) *kafka.ConfigMap {
+	result := *cfg.getKafkaConfigMapShared()
+	result["client.id"] = clientID
+	return &result
+}
+
+func (cfg *KafkaConfig) getKafkaConfigMapShared() *kafka.ConfigMap {
 	if cfg.SslMode != "disable" {
 		return &kafka.ConfigMap{
 			"bootstrap.servers":  cfg.Host,
-			"group.id":           consumerGroup,
-			"enable.auto.commit": false,
 			"security.protocol":  "SASL_SSL",
 			"sasl.mechanisms":    "PLAIN",
 			"sasl.username":      cfg.Username,
@@ -58,7 +70,5 @@ func (cfg *KafkaConfig) GetKafkaConfigMap(consumerGroup string) *kafka.ConfigMap
 
 	return &kafka.ConfigMap{
 		"bootstrap.servers":  cfg.Host,
-		"group.id":           consumerGroup,
-		"enable.auto.commit": false,
 	}
 }
