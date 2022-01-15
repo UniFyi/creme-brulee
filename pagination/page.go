@@ -10,6 +10,7 @@ import (
 const (
 	PageTimeFormat = "2006-01-02 15:04:05.000000"
 	defaultPageSize = 3
+	defaultMaxPageSize = 100
 )
 
 type PageCursor struct {
@@ -43,6 +44,9 @@ func ResolvePageSize(size *int) int {
 	if *size < 1 {
 		// Negative page size or zero will result into usage of default page size
 		return defaultPageSize
+	}
+	if *size > defaultMaxPageSize {
+		return defaultMaxPageSize
 	}
 	return *size
 }
