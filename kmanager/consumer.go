@@ -70,32 +70,3 @@ func (mc *MessageConsumer) Start(ctx context.Context, handleMessage TopicHandler
 		}
 	}
 }
-
-func newHealthzChecker(ctx context.Context, cfg *config.KafkaConfig) (*KafkaHealthChecker, error) {
-	log := ctxlogrus.Extract(ctx)
-	log.Info("starting healthz kafka consumer")
-
-	kc, kafkaError := kafka.NewConsumer(cfg.GetKafkaConfigMapConsumer(HealthzConsumerGroup))
-	if kafkaError != nil {
-		log.Fatal(kafkaError)
-	}
-	err := kc.SubscribeTopics([]string{HealthTopic}, nil)
-	if err != nil {
-		log.Errorf("failed to subscirbe to kafka topics %v", err)
-		return nil, err
-	}
-
-	return &KafkaHealthChecker{
-		consumer: kc,
-	}, nil
-}
-
-func (h *KafkaHealthChecker) Cleanup() error {
-	return h.consumer.Close()
-}
-
-func (h *KafkaHealthChecker) IsHealthy() bool {
-	_, err := h.consumer.ReadMessage(-1)
-	// is healthy only if error is null
-	return err == nil
-}
