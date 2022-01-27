@@ -1,0 +1,14 @@
+name: Build
+
+# Run workflow on every commit
+on: [push]
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+
+      - name: Run unit tests
+        run: make unit

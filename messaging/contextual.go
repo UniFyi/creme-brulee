@@ -3,8 +3,8 @@ package messaging
 import "github.com/google/uuid"
 
 type Baggage struct {
-	UserID     *uuid.UUID  `json:"userId,omitempty"`
-	SentAt     *CustomTime `json:"sentAt,omitempty"`
+	UserID     *uuid.UUID    `json:"userId,omitempty"`
+	SentAt     *TimeNano3339 `json:"sentAt,omitempty"`
 	CarryOn
 }
 
