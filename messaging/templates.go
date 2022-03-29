@@ -3,8 +3,13 @@ package messaging
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus/ctxlogrus"
+)
+
+var (
+	ErrFlatteningFailed = errors.New("failed flattening event")
 )
 
 type EventTemplate struct {
@@ -44,7 +49,11 @@ func NewEventsFromTemplate(ctx context.Context, data []byte, eventTemplates map[
 		if err != nil {
 			return nil, err
 		}
-		return event.Flatten(concreteEvent), nil
+		resultingEvents := event.Flatten(concreteEvent)
+		if resultingEvents == nil {
+			return nil, ErrFlatteningFailed
+		}
+		return resultingEvents, nil
 	}
 	return nil, fmt.Errorf("missing key [type] in %v", body)
 }
