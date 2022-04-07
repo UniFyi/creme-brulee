@@ -1,0 +1,227 @@
+[33mcommit ffe3bd794bcd5695b7d01e9c731c2f6c5a6ff9c1[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Tue Mar 29 09:10:31 2022 -0700
+
+    save
+
+[33mcommit 3091a7b2a44f38778b0c46114191351acc09c446[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Mon Mar 28 09:13:19 2022 -0700
+
+    save
+
+[33mcommit d70c86a7ef5182749b5644bdf5f7185908425e8c[m
+Author: Constantin Koval <60330780+Cobalt0s@users.noreply.github.com>
+Date:   Fri Jan 28 00:06:53 2022 +0200
+
+    Add Support to ISO8601 Time format (#6)
+
+[33mcommit 98e4b713f20cff922aafac105f6769b250e369cd[m
+Author: Constantin Koval <60330780+Cobalt0s@users.noreply.github.com>
+Date:   Thu Jan 27 11:04:24 2022 +0200
+
+    Fix DB logging (#5)
+
+[33mcommit 87a94e07d526d6f3882c7a3f14b0808f54381415[m
+Author: Constantin Koval <60330780+Cobalt0s@users.noreply.github.com>
+Date:   Thu Jan 20 21:11:55 2022 +0200
+
+    Removed unused methods (#4)
+
+[33mcommit 839770fad5f5ff155691b2dedde4a59356f88eac[m
+Author: Constantin Koval <60330780+Cobalt0s@users.noreply.github.com>
+Date:   Sat Jan 15 22:38:17 2022 +0200
+
+    Define pagiantion upper boundray (#3)
+
+[33mcommit a3a1f33b4e0576e2ff01f42ee97ab6fc508fcd7e[m
+Author: Constantin Koval <60330780+Cobalt0s@users.noreply.github.com>
+Date:   Sat Jan 15 16:33:33 2022 +0200
+
+    Update Harvester prompt to use env (#1)
+
+[33mcommit 4be4c3b368ca0ccfa8ffdfa64dab4f3dfb88f913[m
+Author: Constantin Koval <60330780+Cobalt0s@users.noreply.github.com>
+Date:   Sat Jan 15 16:33:24 2022 +0200
+
+    Differentiate kafka producer and consumer env maps (#2)
+
+[33mcommit af75a148ae6a92521d9d91a7a4210b62897efd7e[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sat Jan 8 02:49:01 2022 -0800
+
+    Add README
+
+[33mcommit 9d46a89144b9a1e7641532e7d47b08a126727322[m[33m ([m[1;33mtag: v0.0.16[m[33m)[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sat Jan 8 02:42:17 2022 -0800
+
+    Add Role branching capability to Gin requests
+
+[33mcommit 271d84c8568aeb90176b060d5cffff490ec1e28d[m[33m ([m[1;33mtag: v0.0.15[m[33m)[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Thu Dec 16 01:47:39 2021 -0800
+
+    Make Time QP converter return InvalidFieldErr
+
+[33mcommit 45e0e2448ccefbed0aa18d030a728100126fd10b[m[33m ([m[1;33mtag: v0.0.14[m[33m)[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Thu Dec 16 01:43:05 2021 -0800
+
+    Introduce Time QP
+
+[33mcommit 8d872f7270e39fed22338e6ff5c4029958210391[m[33m ([m[1;33mtag: v0.0.13[m[33m)[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Thu Dec 16 01:18:57 2021 -0800
+
+    Add string parse time CustomTime
+
+[33mcommit cc2dbddd97e01e9ec85c8946bd88b19c103163d5[m[33m ([m[1;33mtag: v0.0.12[m[33m)[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Wed Dec 15 21:13:19 2021 -0800
+
+    Add harvester Propmt
+
+[33mcommit 6b7329751f6590187bea29d9548316ced5c4d633[m[33m ([m[1;33mtag: v0.0.11[m[33m)[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Wed Dec 15 04:17:18 2021 -0800
+
+    Add named tracing coming from Kafka event
+
+[33mcommit 21a009dd270cfa446fe9348bf7cb2d5adacd7b09[m[33m ([m[1;33mtag: v0.0.10[m[33m)[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Wed Dec 15 02:21:41 2021 -0800
+
+    Fix Env Duration regex
+
+[33mcommit 5ec07e6548de81df2359e59d39e487c40835eeb4[m[33m ([m[1;33mtag: v0.0.9[m[33m)[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Wed Dec 15 02:07:00 2021 -0800
+
+    Add ID to Outbox table
+
+[33mcommit 0027d83fa198de19f741cbcb1e2287684c91e79d[m[33m ([m[1;33mtag: v0.0.8[m[33m)[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Tue Dec 14 20:19:19 2021 -0800
+
+    Deep copy Baggage
+
+[33mcommit 89f3f6e92fdfee53857f3df93c29a2d3c3d5f4d0[m[33m ([m[1;33mtag: v0.0.7[m[33m)[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Tue Dec 14 19:15:06 2021 -0800
+
+    Make all the fields in baggage as optional
+
+[33mcommit 1e0c7dabbc597087599513929a8734f8acb18ec9[m[33m ([m[1;33mtag: v0.0.6[m[33m)[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Mon Dec 13 22:16:42 2021 -0800
+
+    Add CarryOn to Baggage
+
+[33mcommit f13ce73ba5055e8c9accb8a0d9bf48ad3d7ce3a1[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sat Dec 11 20:03:23 2021 -0800
+
+    Add Duration env config
+
+[33mcommit 6a3b54d08e308c976843a50696c7109730b20079[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sat Dec 11 17:14:54 2021 -0800
+
+    Modify Baggage, Add KafkaHealthChecker
+
+[33mcommit 11fd2fc141395810417a80af7fce77969feeba5b[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sat Dec 11 13:54:59 2021 -0800
+
+    Add ReceieverID to Baggage, kafka health checker
+
+[33mcommit 6e67134c50f8d940031455833db45c8b6b29aab4[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Thu Dec 2 22:57:14 2021 -0800
+
+    Add CustomTime format, Default Baggage definition
+
+[33mcommit 78a5c24098ce41b988aa177aaef29e34381019ba[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Tue Nov 30 07:09:30 2021 -0800
+
+    Add tracing
+
+[33mcommit 0928c9b09ae07785ec2c172025cd5163aaae88b5[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sun Oct 24 03:47:05 2021 -0700
+
+    save
+
+[33mcommit 8fbc0066fbb53eceaf2ee427eca491a127cbe4be[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sun Oct 24 03:37:58 2021 -0700
+
+    save
+
+[33mcommit e9f003990c6cba99bcb8af8a30b85a243d20f87b[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sun Oct 24 02:48:30 2021 -0700
+
+    save
+
+[33mcommit 64d057f87017b431dacab81169cbd6f17b543045[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sun Oct 24 02:07:35 2021 -0700
+
+    save
+
+[33mcommit 88f94a7367bbac3684eb70f325b48e20c33279f3[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sun Oct 24 01:25:49 2021 -0700
+
+    save
+
+[33mcommit 8a8618314f778389050ae4371115f438edf8dc60[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sat Oct 23 22:10:02 2021 -0700
+
+    save
+
+[33mcommit 3e0603fad803be27ab669ec750557079ad9b77c1[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sat Oct 23 22:08:43 2021 -0700
+
+    save
+
+[33mcommit 7e03ab6cedb975abcdc88bce6495c3d4307f5031[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sat Oct 23 21:23:15 2021 -0700
+
+    save
+
+[33mcommit 051e10c671ba9f90035c89dbd45dcfc8d6d4f0b4[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sat Oct 23 21:21:57 2021 -0700
+
+    save
+
+[33mcommit c0e032e334e5d0303e78a905644601428c20cdf6[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sat Oct 23 21:19:34 2021 -0700
+
+    save
+
+[33mcommit 177aa35e00a2ccec7e9af978f10f12c57bc2ea16[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sat Oct 23 20:52:38 2021 -0700
+
+    save
+
+[33mcommit b5d8717771b0ce24fba27739b30be7fe7e3049ab[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sat Oct 23 20:28:30 2021 -0700
+
+    save
+
+[33mcommit 7268849a1b5d62c811e4a91e2c91324bb72b5a1b[m
+Author: Cobalt0s <constantin.y.koval@gmail.com>
+Date:   Sat Oct 23 07:09:05 2021 -0700
+
+    initial code

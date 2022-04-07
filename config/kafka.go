@@ -50,6 +50,11 @@ func (cfg *KafkaConfig) GetKafkaConfigMapConsumer(consumerGroup string) *kafka.C
 	return &result
 }
 
+func (cfg *KafkaConfig) GetKafkaConfigMapConsumerEarliest(consumerGroup string) *kafka.ConfigMap {
+	result := *cfg.GetKafkaConfigMapConsumer(consumerGroup)
+	result["auto.offset.reset"] = "earliest"
+	return &result
+}
 
 func (cfg *KafkaConfig) GetKafkaConfigMapProducer(clientID string) *kafka.ConfigMap {
 	result := *cfg.getKafkaConfigMapShared()

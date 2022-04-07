@@ -10,7 +10,6 @@ import (
 
 const (
 	HealthTopic          = "Healthz"
-	HealthzConsumerGroup = "healthz-consumer-group"
 )
 
 type MessageConsumer struct {
@@ -24,9 +23,17 @@ type KafkaHealthChecker struct {
 }
 
 func NewMessageConsumer(ctx context.Context, db *gorm.DB, cfg *config.KafkaConfig, consumerGroup string, topicNames []string) *MessageConsumer {
+	return createMessageConsumer(ctx, db, cfg, consumerGroup, topicNames, false)
+}
+
+func NewMessageConsumerOrigin(ctx context.Context, db *gorm.DB, cfg *config.KafkaConfig, consumerGroup string, topicNames []string) *MessageConsumer {
+	return createMessageConsumer(ctx, db, cfg, consumerGroup, topicNames, true)
+}
+
+func createMessageConsumer(ctx context.Context, db *gorm.DB, cfg *config.KafkaConfig, consumerGroup string, topicNames []string, origin bool) *MessageConsumer {
 	log := ctxlogrus.Extract(ctx)
 
-	kc, kafkaError := kafka.NewConsumer(cfg.GetKafkaConfigMapConsumer(consumerGroup))
+	kc, kafkaError := kafka.NewConsumer(getConsumerMap(origin, cfg, consumerGroup))
 	if kafkaError != nil {
 		log.Fatal(kafkaError)
 	}
@@ -35,6 +42,13 @@ func NewMessageConsumer(ctx context.Context, db *gorm.DB, cfg *config.KafkaConfi
 		topicNames: topicNames,
 		db:         db,
 	}
+}
+
+func getConsumerMap(origin bool, cfg *config.KafkaConfig, consumerGroup string) *kafka.ConfigMap {
+	if origin {
+		return cfg.GetKafkaConfigMapConsumerEarliest(consumerGroup)
+	}
+	return cfg.GetKafkaConfigMapConsumer(consumerGroup)
 }
 
 type TopicHandler func(ctx context.Context, db *gorm.DB, msg *kafka.Message) error
