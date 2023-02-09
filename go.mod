@@ -7,7 +7,7 @@ require (
 	github.com/containerd/containerd v1.5.8 // indirect
 	github.com/docker/docker v20.10.11+incompatible // indirect
 	github.com/docker/go-connections v0.4.0 // indirect
-	github.com/gin-gonic/gin v1.7.4
+	github.com/gin-gonic/gin v1.7.7
 	github.com/golang-migrate/migrate v3.5.4+incompatible
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/mux v1.8.0 // indirect
