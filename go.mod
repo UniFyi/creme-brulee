@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/confluentinc/confluent-kafka-go v1.7.0
-	github.com/containerd/containerd v1.5.8 // indirect
+	github.com/containerd/containerd v1.5.18 // indirect
 	github.com/docker/docker v20.10.11+incompatible // indirect
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/gin-gonic/gin v1.7.4
@@ -15,7 +15,6 @@ require (
 	github.com/jackc/pgconn v1.10.0
 	github.com/moby/term v0.0.0-20210619224110-3f7ff695adc6 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
-	github.com/opencontainers/image-spec v1.0.2 // indirect
 	github.com/sirupsen/logrus v1.8.1
 	go.opentelemetry.io/otel v1.2.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.2.0
